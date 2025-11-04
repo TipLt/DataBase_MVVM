@@ -1,0 +1,96 @@
+﻿<Window x:Class="DataBase_MVVM.Views.ListProductWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:viewmodels="clr-namespace:DataBase_MVVM.ViewModels"
+        Title="List Product" Height="600" Width="900"
+        WindowStartupLocation="CenterScreen">
+
+    <!--<Window.DataContext>
+        <viewmodels:ViewModels/>
+    </Window.DataContext>-->
+
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Height" Value="30"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="MinWidth" Value="100"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Danh sách sản phẩm -->
+        <GroupBox Grid.Column="0" Header="Danh sách sản phẩm" Margin="0,0,5,0">
+            <DataGrid x:Name="ProductDataGrid"
+                      ItemsSource="{Binding Products}"
+                      SelectedItem="{Binding SelectedProduct, Mode=TwoWay}"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      SelectionMode="Single"
+                      CanUserAddRows="False"
+                      CanUserDeleteRows="False"
+                      AlternatingRowBackground="LightGray"
+                      GridLinesVisibility="Horizontal">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding ProductID}" Width="50"/>
+                    <DataGridTextColumn Header="Tên sản phẩm" Binding="{Binding ProductName}" Width="*"/>
+                    <DataGridTextColumn Header="Giá" Binding="{Binding UnitPrice, StringFormat='{}{0:N0} VNĐ'}" Width="120"/>
+                    <DataGridTextColumn Header="Số lượng" Binding="{Binding UnitsInStock}" Width="80"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </GroupBox>
+
+        <!-- Chi tiết và chức năng -->
+        <GroupBox Grid.Column="1" Header="Chi tiết sản phẩm" Margin="5,0,0,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Form chi tiết -->
+                <StackPanel Grid.Row="1" Margin="10">
+                    <TextBlock Text="ID:" FontWeight="Bold"/>
+                    <TextBox Text="{Binding ProductId, Mode=OneWay}" 
+                             IsReadOnly="True" 
+                             Background="#F0F0F0"/>
+
+                    <TextBlock Text="Name:" FontWeight="Bold" Margin="0,10,0,0"/>
+                    <TextBox Text="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <TextBlock Text="Price:" FontWeight="Bold" Margin="0,10,0,0"/>
+                    <TextBox Text="{Binding UnitPrice, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}"/>
+
+                    <TextBlock Text="" Height="20"/>
+
+                    <!-- Buttons -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Content="Update" 
+                                Command="{Binding UpdateCommand}"
+                                Background="#4CAF50" 
+                                Foreground="White"/>
+                        <Button Content="Delete" 
+                                Command="{Binding DeleteCommand}"
+                                Background="#f44336" 
+                                Foreground="White"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </GroupBox>
+    </Grid>
+</Window>

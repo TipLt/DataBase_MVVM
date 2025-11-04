@@ -1,0 +1,9 @@
+﻿<Application x:Class="DataBase_MVVM.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:DataBase_MVVM"
+             StartupUri="Views/ListProduct.xaml">
+    <Application.Resources>
+         
+    </Application.Resources>
+</Application>
